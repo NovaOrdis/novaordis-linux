@@ -16,7 +16,20 @@
 
 package io.novaordis.linux;
 
+import io.novaordis.utilities.ParsingException;
+
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
+ * Represents an immutable /proc/stat "reading" - the state of the file at a certain moment in time.
+ *
+ * https://kb.novaordis.com/index.php//proc/stat#Contents
+ *
+ * TODO: support for "page", "swap", "intr", "ctxt", etc. not yet implemented.
+ *
  * @author Ovidiu Feodorov <ovidiu@novaordis.com>
  * @since 9/9/17
  */
@@ -24,19 +37,122 @@ public class ProcStat {
 
     // Constants -------------------------------------------------------------------------------------------------------
 
+    public static final String CPU_LINE_PREFIX = "cpu";
+
     // Static ----------------------------------------------------------------------------------------------------------
 
     // Attributes ------------------------------------------------------------------------------------------------------
 
+    private CPUStats cumulativeCPUStatistics;
+
+    //
+    // indexed per CPU id, as read from the file
+    //
+
+    private List<CPUStats> perCPUStatistics;
+
     // Constructors ----------------------------------------------------------------------------------------------------
 
+    /**
+     * "Reads" the file information and initializes internal structures.
+     *
+     * @param content the content of the file.
+     */
+    public ProcStat(byte[] content) throws ParsingException {
+
+        if (content == null) {
+
+            throw new IllegalArgumentException("null content");
+        }
+
+        perCPUStatistics = new ArrayList<>();
+
+        String contentAsString = new String(content);
+
+        parse(contentAsString);
+    }
+
     // Public ----------------------------------------------------------------------------------------------------------
+
+    /**
+     * @return the cumulative CPU statistics as read from the "cpu" line.
+     */
+    public CPUStats getCumulativeCPUStatistics() {
+
+        return cumulativeCPUStatistics;
+    }
+
+    /**
+     * @return the number of CPUs the file contains statistics for. The CPU indexes are 0-based.
+     */
+    public int getCPUCount() {
+
+        return perCPUStatistics.size();
+    }
+
+    /**
+     * @return the CPU statistics for the corresponding CPU. The CPU indexes are 0-based.
+     *
+     * @exception IllegalArgumentException if no such CPU exists.
+     */
+    public CPUStats getCPUStatistics(int cpuIndex) {
+
+        try {
+
+            return perCPUStatistics.get(cpuIndex);
+        }
+        catch(IndexOutOfBoundsException e) {
+
+            throw new IllegalArgumentException("no such cpu: " + cpuIndex, e);
+        }
+    }
 
     // Package protected -----------------------------------------------------------------------------------------------
 
     // Protected -------------------------------------------------------------------------------------------------------
 
     // Private ---------------------------------------------------------------------------------------------------------
+
+    private void parse(String content) throws ParsingException {
+
+        BufferedReader br = new BufferedReader(new StringReader(content));
+
+        String line;
+
+        long lineNumber = 0;
+
+        try {
+
+            while((line = br.readLine()) != null) {
+
+                lineNumber ++;
+
+                if (line.startsWith(CPU_LINE_PREFIX)) {
+
+                    CPUStats cpuStats = new CPUStats(lineNumber, line);
+
+                    if (cpuStats.isCumulative()) {
+
+                        this.cumulativeCPUStatistics = cpuStats;
+                    }
+                    else {
+
+                        perCPUStatistics.add(cpuStats.getCPUID(), cpuStats);
+                    }
+                }
+            }
+
+            br.close();
+        }
+        catch(Exception e) {
+
+            //
+            // should not happen
+            //
+
+            throw new IllegalStateException(e);
+        }
+    }
 
     // Inner classes ---------------------------------------------------------------------------------------------------
 
