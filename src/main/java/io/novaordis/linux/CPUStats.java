@@ -16,7 +16,7 @@
 
 package io.novaordis.linux;
 
-import io.novaordis.utilities.ParsingException;
+import io.novaordis.utilities.parsing.ParsingException;
 
 /**
  * The immutable representation of a "cpu" line.

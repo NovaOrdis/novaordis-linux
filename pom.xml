@@ -16,7 +16,7 @@
                Dependency Versions
         -->
 
-        <novaordis.utilities.version>4.7.11-SNAPSHOT-6</novaordis.utilities.version>
+        <novaordis.utilities.version>4.7.11-SNAPSHOT-7</novaordis.utilities.version>
 
         <slf4j.version>1.7.12</slf4j.version>
         <junit.version>4.12</junit.version>

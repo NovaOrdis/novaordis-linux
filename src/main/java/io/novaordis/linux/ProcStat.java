@@ -16,7 +16,8 @@
 
 package io.novaordis.linux;
 
-import io.novaordis.utilities.ParsingException;
+import io.novaordis.utilities.parsing.ParsingException;
+import io.novaordis.utilities.parsing.PreParsedContent;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
@@ -33,7 +34,7 @@ import java.util.List;
  * @author Ovidiu Feodorov <ovidiu@novaordis.com>
  * @since 9/9/17
  */
-public class ProcStat {
+public class ProcStat implements PreParsedContent {
 
     // Constants -------------------------------------------------------------------------------------------------------
 
