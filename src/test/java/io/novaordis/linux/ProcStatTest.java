@@ -16,6 +16,7 @@
 
 package io.novaordis.linux;
 
+import io.novaordis.utilities.parsing.ParsingException;
 import org.junit.Test;
 
 import java.io.File;
@@ -131,6 +132,37 @@ public class ProcStatTest {
             assertTrue(msg.contains("null content"));
         }
     }
+
+    @Test
+    public void constructor_MustHaveAtLeastOneCPULine() throws Exception {
+
+        try {
+
+            new ProcStat("something that does not make any sense".getBytes());
+            fail("should have thrown exception");
+        }
+        catch(ParsingException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("missing cpu data"));
+        }
+    }
+
+    @Test
+    public void constructor_MustHaveAtLeastOneCPULine2() throws Exception {
+
+        try {
+
+            new ProcStat("something that does not make any sense\non two lines".getBytes());
+            fail("should have thrown exception");
+        }
+        catch(ParsingException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("missing cpu data"));
+        }
+    }
+
     // Package protected -----------------------------------------------------------------------------------------------
 
     // Protected -------------------------------------------------------------------------------------------------------

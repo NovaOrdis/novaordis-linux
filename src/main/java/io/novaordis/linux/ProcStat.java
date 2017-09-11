@@ -153,6 +153,15 @@ public class ProcStat implements PreParsedContent {
 
             throw new IllegalStateException(e);
         }
+
+        //
+        // consistency checks
+        //
+
+        if (cumulativeCPUStatistics == null) {
+
+            throw new ParsingException("missing cpu data");
+        }
     }
 
     // Inner classes ---------------------------------------------------------------------------------------------------
