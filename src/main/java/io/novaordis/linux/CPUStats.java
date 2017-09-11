@@ -24,7 +24,7 @@ import io.novaordis.utilities.parsing.ParsingException;
  * @author Ovidiu Feodorov <ovidiu@novaordis.com>
  * @since 9/9/17
  */
-class CPUStats {
+public class CPUStats {
 
     // Constants -------------------------------------------------------------------------------------------------------
 
