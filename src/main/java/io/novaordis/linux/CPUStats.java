@@ -105,7 +105,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getUserTimePercentage(ProcStat previousReading) {
+    public float getUserTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
@@ -121,7 +121,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getNiceTimePercentage(ProcStat previousReading) {
+    public float getNiceTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
@@ -137,7 +137,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getSystemTimePercentage(ProcStat previousReading) {
+    public float getSystemTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
@@ -153,7 +153,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getIdleTimePercentage(ProcStat previousReading) {
+    public float getIdleTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
@@ -169,7 +169,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getIowaitTimePercentage(ProcStat previousReading) {
+    public float getIowaitTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
@@ -185,7 +185,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getIrqTimePercentage(ProcStat previousReading) {
+    public float getIrqTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
@@ -201,7 +201,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getSoftirqTimePercentage(ProcStat previousReading) {
+    public float getSoftirqTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
@@ -217,7 +217,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getStealTimePercentage(ProcStat previousReading) {
+    public float getStealTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
@@ -234,7 +234,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getGuestTimePercentage(ProcStat previousReading) {
+    public float getGuestTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
@@ -251,7 +251,7 @@ public class CPUStats {
     /**
      * @param previousReading may be null.
      */
-    public float getGuestNiceTimePercentage(ProcStat previousReading) {
+    public float getGuestNiceTimePercentage(CPUStats previousReading) {
 
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
