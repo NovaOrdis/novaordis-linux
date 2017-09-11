@@ -103,11 +103,27 @@ public class CPUStats {
     }
 
     /**
+     * @param previousReading may be null.
+     */
+    public float getUserTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
+    }
+
+    /**
      *  Time (in USER_HZ units) spent in user mode with low priority (nice).
      */
     public long getNiceTime() {
 
         return niceTime;
+    }
+
+    /**
+     * @param previousReading may be null.
+     */
+    public float getNiceTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
     }
 
     /**
@@ -119,11 +135,27 @@ public class CPUStats {
     }
 
     /**
+     * @param previousReading may be null.
+     */
+    public float getSystemTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
+    }
+
+    /**
      *  Time (in USER_HZ units) spent in idle mode.
      */
     public long getIdleTime() {
 
         return idleTime;
+    }
+
+    /**
+     * @param previousReading may be null.
+     */
+    public float getIdleTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
     }
 
     /**
@@ -135,11 +167,27 @@ public class CPUStats {
     }
 
     /**
+     * @param previousReading may be null.
+     */
+    public float getIowaitTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
+    }
+
+    /**
      *  Time in USER_HZ units spent servicing interrupts.
      */
     public long getIrqTime() {
 
         return irqTime;
+    }
+
+    /**
+     * @param previousReading may be null.
+     */
+    public float getIrqTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
     }
 
     /**
@@ -151,11 +199,27 @@ public class CPUStats {
     }
 
     /**
+     * @param previousReading may be null.
+     */
+    public float getSoftirqTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
+    }
+
+    /**
      *  Time in USER_HZ units spent in other operating systems when running in a virtualized environment.
      */
     public long getStealTime() {
 
         return stealTime;
+    }
+
+    /**
+     * @param previousReading may be null.
+     */
+    public float getStealTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
     }
 
     /**
@@ -168,12 +232,28 @@ public class CPUStats {
     }
 
     /**
+     * @param previousReading may be null.
+     */
+    public float getGuestTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
+    }
+
+    /**
      *  Time in USER_HZ units spent running a niced guest (virtual CPU for guest operating systems under the control of
      *  the Linux kernel).
      */
     public long getGuestNiceTime() {
 
         return guestNiceTime;
+    }
+
+    /**
+     * @param previousReading may be null.
+     */
+    public float getGuestNiceTimePercentage(ProcStat previousReading) {
+
+        throw new RuntimeException("NOT YET IMPLEMENTED");
     }
 
     // Package protected -----------------------------------------------------------------------------------------------
