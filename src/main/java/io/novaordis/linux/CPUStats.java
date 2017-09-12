@@ -17,14 +17,17 @@
 package io.novaordis.linux;
 
 import io.novaordis.utilities.parsing.ParsingException;
+import io.novaordis.utilities.parsing.PreParsedContent;
 
 /**
  * The immutable representation of a "cpu" line.
  *
+ * It is pre-parsed content, hence it carries the PreParsedContent marker.
+ *
  * @author Ovidiu Feodorov <ovidiu@novaordis.com>
  * @since 9/9/17
  */
-public class CPUStats {
+public class CPUStats implements PreParsedContent {
 
     // Constants -------------------------------------------------------------------------------------------------------
 
