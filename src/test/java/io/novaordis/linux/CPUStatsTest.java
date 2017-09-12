@@ -50,7 +50,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(1L, null);
+            new CPUStats(1L, null, null);
             fail("should have thrown exception");
         }
         catch(IllegalArgumentException e) {
@@ -65,7 +65,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, "something that has nothing to do with CPU");
+            new CPUStats(7L, null, "something that has nothing to do with CPU");
             fail("should have thrown exception");
         }
         catch(ParsingException e) {
@@ -82,7 +82,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, "cpublah blah blah");
+            new CPUStats(7L, null, "cpublah blah blah");
             fail("should have thrown exception");
         }
         catch(ParsingException e) {
@@ -102,7 +102,7 @@ public class CPUStatsTest {
 
         String line = "cpu  51867872 12504 17293071 1007053375 43884956 0 734997 28476 0 0";
 
-        CPUStats s = new CPUStats(1L, line);
+        CPUStats s = new CPUStats(1L, null, line);
 
         assertTrue(s.isCumulative());
 
@@ -114,7 +114,7 @@ public class CPUStatsTest {
 
         String line = "cpu0 26424972 5655 8522768 507855710 17916771 0 160989 12217 0 0";
 
-        CPUStats s = new CPUStats(1L, line);
+        CPUStats s = new CPUStats(1L, null, line);
 
         assertFalse(s.isCumulative());
 
@@ -128,7 +128,7 @@ public class CPUStatsTest {
 
         String line = "cpu 1 2 3 4 5 6 7 8 9 10";
 
-        CPUStats s = new CPUStats(1L, line);
+        CPUStats s = new CPUStats(1L, null, line);
 
         assertEquals(1L, s.getUserTime());
         assertEquals(2L, s.getNiceTime());
@@ -148,7 +148,7 @@ public class CPUStatsTest {
 
         String line = "cpu0 1 2 3 4 5 6 7 8 9 10";
 
-        CPUStats s = new CPUStats(1L, line);
+        CPUStats s = new CPUStats(1L, null, line);
 
         assertEquals(1L, s.getUserTime());
         assertEquals(2L, s.getNiceTime());
@@ -170,7 +170,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -189,7 +189,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -208,7 +208,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -227,7 +227,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -246,7 +246,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -265,7 +265,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -284,7 +284,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -303,7 +303,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -322,7 +322,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -341,7 +341,7 @@ public class CPUStatsTest {
 
         try {
 
-            new CPUStats(7L, line);
+            new CPUStats(7L, null, line);
         }
         catch(ParsingException e) {
 
@@ -358,7 +358,7 @@ public class CPUStatsTest {
     @Test
     public void getUserTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getUserTimePercentage(null);
 
@@ -368,8 +368,8 @@ public class CPUStatsTest {
     @Test
     public void getUserTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getUserTimePercentage(pr);
 
@@ -379,8 +379,8 @@ public class CPUStatsTest {
     @Test
     public void getUserTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -397,7 +397,7 @@ public class CPUStatsTest {
     @Test
     public void getNiceTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getNiceTimePercentage(null);
 
@@ -407,8 +407,8 @@ public class CPUStatsTest {
     @Test
     public void getNiceTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getNiceTimePercentage(pr);
 
@@ -418,8 +418,8 @@ public class CPUStatsTest {
     @Test
     public void getNiceTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -436,7 +436,7 @@ public class CPUStatsTest {
     @Test
     public void getSystemTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getSystemTimePercentage(null);
 
@@ -446,8 +446,8 @@ public class CPUStatsTest {
     @Test
     public void getSystemTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getSystemTimePercentage(pr);
 
@@ -457,8 +457,8 @@ public class CPUStatsTest {
     @Test
     public void getSystemTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -475,7 +475,7 @@ public class CPUStatsTest {
     @Test
     public void getIdleTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getIdleTimePercentage(null);
 
@@ -485,8 +485,8 @@ public class CPUStatsTest {
     @Test
     public void getIdleTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getIdleTimePercentage(pr);
 
@@ -496,8 +496,8 @@ public class CPUStatsTest {
     @Test
     public void getIdleTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -514,7 +514,7 @@ public class CPUStatsTest {
     @Test
     public void getIowaitTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getIowaitTimePercentage(null);
 
@@ -524,8 +524,8 @@ public class CPUStatsTest {
     @Test
     public void getIowaitTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getIowaitTimePercentage(pr);
 
@@ -535,8 +535,8 @@ public class CPUStatsTest {
     @Test
     public void getIowaitTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -553,7 +553,7 @@ public class CPUStatsTest {
     @Test
     public void getIrqTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getIrqTimePercentage(null);
 
@@ -563,8 +563,8 @@ public class CPUStatsTest {
     @Test
     public void getIrqTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getIrqTimePercentage(pr);
 
@@ -574,8 +574,8 @@ public class CPUStatsTest {
     @Test
     public void getIrqTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -592,7 +592,7 @@ public class CPUStatsTest {
     @Test
     public void getSoftirqTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getSoftirqTimePercentage(null);
 
@@ -602,8 +602,8 @@ public class CPUStatsTest {
     @Test
     public void getSoftirqTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getSoftirqTimePercentage(pr);
 
@@ -613,8 +613,8 @@ public class CPUStatsTest {
     @Test
     public void getSoftirqTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -631,7 +631,7 @@ public class CPUStatsTest {
     @Test
     public void getStealTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getStealTimePercentage(null);
 
@@ -641,8 +641,8 @@ public class CPUStatsTest {
     @Test
     public void getStealTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getStealTimePercentage(pr);
 
@@ -652,8 +652,8 @@ public class CPUStatsTest {
     @Test
     public void getStealTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -670,7 +670,7 @@ public class CPUStatsTest {
     @Test
     public void getGuestTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getGuestTimePercentage(null);
 
@@ -680,8 +680,8 @@ public class CPUStatsTest {
     @Test
     public void getGuestTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getGuestTimePercentage(pr);
 
@@ -691,8 +691,8 @@ public class CPUStatsTest {
     @Test
     public void getGuestTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -709,7 +709,7 @@ public class CPUStatsTest {
     @Test
     public void getGuestNiceTimePercentage_NoPreviousReading() throws Exception {
 
-        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         float f = s.getGuestNiceTimePercentage(null);
 
@@ -719,8 +719,8 @@ public class CPUStatsTest {
     @Test
     public void getGuestNiceTimePercentage() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 11 22 33 44 55 66 77 88 99 110");
 
         float f = s.getGuestNiceTimePercentage(pr);
 
@@ -730,8 +730,8 @@ public class CPUStatsTest {
     @Test
     public void getGuestNiceTimePercentage_NoChangeInTotalTime() throws Exception {
 
-        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
-        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats pr = new CPUStats(1L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, null, "cpu 1 2 3 4 5 6 7 8 9 10");
 
         try {
 
@@ -753,8 +753,8 @@ public class CPUStatsTest {
         String r = "cpu 53802252 12981 17867171 1032327410 44915037 0 764142 29459 0 0";
         String r2 = "cpu 53802411 12981 17867222 1032329314 44915145 0 764143 29459 0 0";
 
-        CPUStats s = new CPUStats(null, r);
-        CPUStats s2 = new CPUStats(null, r2);
+        CPUStats s = new CPUStats(null, null, r);
+        CPUStats s2 = new CPUStats(null, null, r2);
 
         float userPercentageSinceBeginningOfTime = s2.getUserTimePercentage(null);
         float userPercentageLastInterval = s2.getUserTimePercentage(s);

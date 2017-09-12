@@ -44,6 +44,8 @@ public class ProcStat implements PreParsedContent {
 
     // Attributes ------------------------------------------------------------------------------------------------------
 
+    private Long instanceCreationTime;
+
     private CPUStats cumulativeCPUStatistics;
 
     //
@@ -65,6 +67,8 @@ public class ProcStat implements PreParsedContent {
 
             throw new IllegalArgumentException("null content");
         }
+
+        instanceCreationTime = System.currentTimeMillis();
 
         perCPUStatistics = new ArrayList<>();
 
@@ -110,6 +114,18 @@ public class ProcStat implements PreParsedContent {
 
     // Package protected -----------------------------------------------------------------------------------------------
 
+    @Override
+    public String toString() {
+
+        String s = "/proc/stat[";
+
+        s += instanceCreationTime == null ? "UNSTAMPED" : Constants.TIMESTAMP_FORMAT.format(instanceCreationTime);
+
+        s += "]";
+
+        return s;
+    }
+
     // Protected -------------------------------------------------------------------------------------------------------
 
     // Private ---------------------------------------------------------------------------------------------------------
@@ -130,7 +146,7 @@ public class ProcStat implements PreParsedContent {
 
                 if (line.startsWith(CPU_LINE_PREFIX)) {
 
-                    CPUStats cpuStats = new CPUStats(lineNumber, line);
+                    CPUStats cpuStats = new CPUStats(lineNumber, instanceCreationTime, line);
 
                     if (cpuStats.isCumulative()) {
 

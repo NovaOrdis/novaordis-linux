@@ -47,6 +47,11 @@ public class CPUStats implements PreParsedContent {
     // Attributes ------------------------------------------------------------------------------------------------------
 
     //
+    // may be null
+    //
+    private Long instanceCreationTime;
+
+    //
     // a 0-based CPU ID index. If missing (null), this instance contains cumulative statistics for all processors in
     // the system
     //
@@ -66,10 +71,14 @@ public class CPUStats implements PreParsedContent {
     // Constructors ----------------------------------------------------------------------------------------------------
 
     /**
+     * @param  instanceCreationTime may be null
+     *
      * @throws ParsingException
      * @throws IllegalArgumentException on null line
      */
-    public CPUStats(Long lineNumber, String line) throws ParsingException {
+    public CPUStats(Long lineNumber, Long instanceCreationTime, String line) throws ParsingException {
+
+        this.instanceCreationTime = instanceCreationTime;
 
         parse(lineNumber, line);
     }
@@ -476,6 +485,18 @@ public class CPUStats implements PreParsedContent {
                         stealTime +
                         guestTime +
                         guestNiceTime;
+    }
+
+    @Override
+    public String toString() {
+
+        String s = "CPUStats[";
+
+        s += instanceCreationTime == null ? "UNSTAMPED" : Constants.TIMESTAMP_FORMAT.format(instanceCreationTime);
+
+        s += "]";
+
+        return s;
     }
 
     // Package protected -----------------------------------------------------------------------------------------------

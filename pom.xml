@@ -8,7 +8,7 @@
     <artifactId>novaordis-linux</artifactId>
     <packaging>jar</packaging>
 
-    <version>1.0.0-SNAPSHOT-8</version>
+    <version>1.0.0-SNAPSHOT-9</version>
 
     <properties>
 
