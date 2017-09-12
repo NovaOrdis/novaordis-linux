@@ -140,6 +140,7 @@ public class CPUStatsTest {
         assertEquals(8L, s.getStealTime());
         assertEquals(9L, s.getGuestTime());
         assertEquals(10L, s.getGuestNiceTime());
+        assertEquals(1L + 2L + 3L + 4L + 5L + 6L + 7L + 8L + 9L + 10L, s.getTotalTime());
     }
 
     @Test
@@ -159,6 +160,7 @@ public class CPUStatsTest {
         assertEquals(8L, s.getStealTime());
         assertEquals(9L, s.getGuestTime());
         assertEquals(10L, s.getGuestNiceTime());
+        assertEquals(1L + 2L + 3L + 4L + 5L + 6L + 7L + 8L + 9L + 10L, s.getTotalTime());
     }
 
     @Test
@@ -349,6 +351,470 @@ public class CPUStatsTest {
 
             assertEquals(7L, e.getLineNumber().longValue());
         }
+    }
+
+    // percentage ------------------------------------------------------------------------------------------------------
+
+    @Test
+    public void getUserTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getUserTimePercentage(null);
+
+        assertEquals(1f/55f, f, 0.00001);
+    }
+
+    @Test
+    public void getUserTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getUserTimePercentage(pr);
+
+        assertEquals(10f/550, f, 0.00001);
+    }
+
+    @Test
+    public void getUserTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getUserTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    @Test
+    public void getNiceTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getNiceTimePercentage(null);
+
+        assertEquals(2f / 55f, f, 0.00001);
+    }
+
+    @Test
+    public void getNiceTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getNiceTimePercentage(pr);
+
+        assertEquals(20f / 550, f, 0.00001);
+    }
+
+    @Test
+    public void getNiceTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getNiceTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    @Test
+    public void getSystemTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getSystemTimePercentage(null);
+
+        assertEquals(3f / 55f, f, 0.00001);
+    }
+
+    @Test
+    public void getSystemTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getSystemTimePercentage(pr);
+
+        assertEquals(30f / 550, f, 0.00001);
+    }
+
+    @Test
+    public void getSystemTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getSystemTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    @Test
+    public void getIdleTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getIdleTimePercentage(null);
+
+        assertEquals(4f / 55f, f, 0.00001);
+    }
+
+    @Test
+    public void getIdleTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getIdleTimePercentage(pr);
+
+        assertEquals(40f / 550, f, 0.00001);
+    }
+
+    @Test
+    public void getIdleTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getIdleTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    @Test
+    public void getIowaitTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getIowaitTimePercentage(null);
+
+        assertEquals(5f / 55f, f, 0.00001);
+    }
+
+    @Test
+    public void getIowaitTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getIowaitTimePercentage(pr);
+
+        assertEquals(50f / 550, f, 0.00001);
+    }
+
+    @Test
+    public void getIowaitTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getIowaitTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    @Test
+    public void getIrqTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getIrqTimePercentage(null);
+
+        assertEquals(6f / 55f, f, 0.00001);
+    }
+
+    @Test
+    public void getIrqTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getIrqTimePercentage(pr);
+
+        assertEquals(60f / 550, f, 0.00001);
+    }
+
+    @Test
+    public void getIrqTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getIrqTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    @Test
+    public void getSoftirqTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getSoftirqTimePercentage(null);
+
+        assertEquals(7f / 55f, f, 0.00001);
+    }
+
+    @Test
+    public void getSoftirqTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getSoftirqTimePercentage(pr);
+
+        assertEquals(70f / 550, f, 0.00001);
+    }
+
+    @Test
+    public void getSoftirqTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getSoftirqTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    @Test
+    public void getStealTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getStealTimePercentage(null);
+
+        assertEquals(8f / 55f, f, 0.00001);
+    }
+
+    @Test
+    public void getStealTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getStealTimePercentage(pr);
+
+        assertEquals(80f / 550, f, 0.00001);
+    }
+
+    @Test
+    public void getStealTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getStealTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    @Test
+    public void getGuestTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getGuestTimePercentage(null);
+
+        assertEquals(9f / 55f, f, 0.00001);
+    }
+
+    @Test
+    public void getGuestTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getGuestTimePercentage(pr);
+
+        assertEquals(90f / 550, f, 0.00001);
+    }
+
+    @Test
+    public void getGuestTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getGuestTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    @Test
+    public void getGuestNiceTimePercentage_NoPreviousReading() throws Exception {
+
+        CPUStats s = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        float f = s.getGuestNiceTimePercentage(null);
+
+        assertEquals(10f / 55f, f, 0.00001);
+    }
+
+    @Test
+    public void getGuestNiceTimePercentage() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 11 22 33 44 55 66 77 88 99 110");
+
+        float f = s.getGuestNiceTimePercentage(pr);
+
+        assertEquals(100f / 550, f, 0.00001);
+    }
+
+    @Test
+    public void getGuestNiceTimePercentage_NoChangeInTotalTime() throws Exception {
+
+        CPUStats pr = new CPUStats(1L, "cpu 1 2 3 4 5 6 7 8 9 10");
+        CPUStats s = new CPUStats(2L, "cpu 1 2 3 4 5 6 7 8 9 10");
+
+        try {
+
+            s.getGuestNiceTimePercentage(pr);
+            fail("should have thrown exception");
+        }
+        catch(IllegalArgumentException e) {
+
+            String msg = e.getMessage();
+            assertTrue(msg.contains("cpu statistics did not change since the last reading"));
+        }
+    }
+
+    // production data -------------------------------------------------------------------------------------------------
+
+    @Test
+    public void productionData() throws Exception {
+
+        String r = "cpu 53802252 12981 17867171 1032327410 44915037 0 764142 29459 0 0";
+        String r2 = "cpu 53802411 12981 17867222 1032329314 44915145 0 764143 29459 0 0";
+
+        CPUStats s = new CPUStats(null, r);
+        CPUStats s2 = new CPUStats(null, r2);
+
+        float userPercentageSinceBeginningOfTime = s2.getUserTimePercentage(null);
+        float userPercentageLastInterval = s2.getUserTimePercentage(s);
+
+        assertEquals(0.046796072f, userPercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(0.07152496f, userPercentageLastInterval, 0.000000001);
+
+        float nicePercentageSinceBeginningOfTime = s2.getNiceTimePercentage(null);
+        float nicePercentageLastInterval = s2.getNiceTimePercentage(s);
+
+        assertEquals(1.1290568E-5, nicePercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(0.0f, nicePercentageLastInterval, 0.000000001);
+
+        float systemPercentageSinceBeginningOfTime = s2.getSystemTimePercentage(null);
+        float systemPercentageLastInterval = s2.getSystemTimePercentage(s);
+
+        assertEquals(0.015540489f, systemPercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(0.022941971f, systemPercentageLastInterval, 0.000000001);
+
+        float idlePercentageSinceBeginningOfTime = s2.getIdleTimePercentage(null);
+        float idlePercentageLastInterval = s2.getIdleTimePercentage(s);
+
+        assertEquals(0.89789575f, idlePercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(0.8565002f, idlePercentageLastInterval, 0.000000001);
+
+        float iowaitPercentageSinceBeginningOfTime = s2.getIowaitTimePercentage(null);
+        float iowaitPercentageLastInterval = s2.getIowaitTimePercentage(s);
+
+        assertEquals(0.039066136f, iowaitPercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(0.048582997f, iowaitPercentageLastInterval, 0.000000001);
+
+        float irqPercentageSinceBeginningOfTime = s2.getIrqTimePercentage(null);
+        float irqPercentageLastInterval = s2.getIrqTimePercentage(s);
+
+        assertEquals(0f, irqPercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(0f, irqPercentageLastInterval, 0.000000001);
+
+        float softirqPercentageSinceBeginningOfTime = s2.getSoftirqTimePercentage(null);
+        float softirqPercentageLastInterval = s2.getSoftirqTimePercentage(s);
+
+        assertEquals(6.646336E-4, softirqPercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(4.4984257E-4, softirqPercentageLastInterval, 0.000000001);
+
+        float stealPercentageSinceBeginningOfTime = s2.getStealTimePercentage(null);
+        float stealPercentageLastInterval = s2.getStealTimePercentage(s);
+
+        assertEquals(2.5622745E-5, stealPercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(0f, stealPercentageLastInterval, 0.000000001);
+
+        float guestPercentageSinceBeginningOfTime = s2.getGuestTimePercentage(null);
+        float guestPercentageLastInterval = s2.getGuestTimePercentage(s);
+
+        assertEquals(0f, guestPercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(0f, guestPercentageLastInterval, 0.000000001);
+
+        float guestNicePercentageSinceBeginningOfTime = s2.getGuestNiceTimePercentage(null);
+        float guestNicePercentageLastInterval = s2.getGuestNiceTimePercentage(s);
+
+        assertEquals(0f, guestNicePercentageSinceBeginningOfTime, 0.000000001);
+        assertEquals(0f, guestNicePercentageLastInterval, 0.000000001);
     }
 
     // Package protected -----------------------------------------------------------------------------------------------

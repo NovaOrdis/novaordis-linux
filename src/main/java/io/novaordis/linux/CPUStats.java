@@ -104,10 +104,30 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent in user mode. If a previous reading is provided, the
+     * percentage is calculated using the user time and total time deltas, otherwise it is calculated based on this
+     * current reading only, which contains aggregated values since the last boot. Closer the readings are, more precise
+     * the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getUserTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getUserTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getUserTime() - previousReading.getUserTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
     }
 
     /**
@@ -120,10 +140,30 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent in nice user mode. If a previous reading is provided, the
+     * percentage is calculated using the nice time and total time deltas, otherwise it is calculated based on this
+     * current reading only, which contains aggregated values since the last boot. Closer the readings are, more precise
+     * the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getNiceTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getNiceTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getNiceTime() - previousReading.getNiceTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
     }
 
     /**
@@ -136,10 +176,30 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent in system mode. If a previous reading is provided, the
+     * percentage is calculated using the system time and total time deltas, otherwise it is calculated based on this
+     * current reading only, which contains aggregated values since the last boot. Closer the readings are, more precise
+     * the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getSystemTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getSystemTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getSystemTime() - previousReading.getSystemTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
     }
 
     /**
@@ -152,10 +212,30 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent in idle mode. If a previous reading is provided, the
+     * percentage is calculated using the idle time and total time deltas, otherwise it is calculated based on this
+     * current reading only, which contains aggregated values since the last boot. Closer the readings are, more precise
+     * the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getIdleTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getIdleTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getIdleTime() - previousReading.getIdleTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
     }
 
     /**
@@ -168,10 +248,30 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent waiting for I/O to complete. If a previous reading is
+     * provided, the percentage is calculated using the iowait time and total time deltas, otherwise it is calculated
+     * based on this current reading only, which contains aggregated values since the last boot. Closer the readings
+     * are, more precise the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getIowaitTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getIowaitTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getIowaitTime() - previousReading.getIowaitTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
     }
 
     /**
@@ -184,10 +284,30 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent servicing hardware interrupts. If a previous reading is
+     * provided, the percentage is calculated using the irq time and total time deltas, otherwise it is calculated based
+     * on this current reading only, which contains aggregated values since the last boot. Closer the readings are, more
+     * precise the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getIrqTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getIrqTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getIrqTime() - previousReading.getIrqTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
     }
 
     /**
@@ -200,10 +320,30 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent servicing software interrupts. If a previous reading is
+     * provided, the percentage is calculated using the softirq time and total time deltas, otherwise it is calculated
+     * based on this current reading only, which contains aggregated values since the last boot. Closer the readings
+     * are, more precise the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getSoftirqTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getSoftirqTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getSoftirqTime() - previousReading.getSoftirqTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
     }
 
     /**
@@ -216,10 +356,30 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent in other operating systems. If a previous reading is
+     * provided, the percentage is calculated using the steal time and total time deltas, otherwise it is calculated
+     * based on this current reading only, which contains aggregated values since the last boot. Closer the readings
+     * are, more precise the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getStealTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getStealTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getStealTime() - previousReading.getStealTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
     }
 
     /**
@@ -233,10 +393,30 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent running a virtual CPU for guest operating systems. If a
+     * previous reading is provided, the percentage is calculated using the guest time and total time deltas, otherwise
+     * it is calculated based on this current reading only, which contains aggregated values since the last boot.
+     * Closer the readings are, more precise the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getGuestTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getGuestTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getGuestTime() - previousReading.getGuestTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
     }
 
     /**
@@ -250,10 +430,49 @@ public class CPUStats {
 
     /**
      * @param previousReading may be null.
+     *
+     * @return the percentage of the total CPU time (calculated as the sum of the user, nice, system, idle, iowait, irq,
+     * softirq, steal, guest and guest_nice readings) spent running a niced guest. If a previous reading is provided,
+     * the percentage is calculated using the user guest time and total time deltas, otherwise it is calculated based on
+     * this current reading only, which contains aggregated values since the last boot. Closer the readings are, more
+     * precise the result is.
+     *
+     * @exception IllegalArgumentException if the current state does not differ from the previous state (total time
+     * is the same).
      */
     public float getGuestNiceTimePercentage(CPUStats previousReading) {
 
-        throw new RuntimeException("NOT YET IMPLEMENTED");
+        if (previousReading == null) {
+
+            return (float)(((double)getGuestNiceTime())/getTotalTime());
+        }
+        else {
+
+            insureStateChanged(previousReading);
+
+            return (float)
+                    (((double)(getGuestNiceTime() - previousReading.getGuestNiceTime()))/
+                            (getTotalTime() - previousReading.getTotalTime()));
+        }
+    }
+
+    /**
+     *  Total CPU time in USER_HZ units. Represents the sum of user, nice, system, idle, iowait, irq, softirq, steal,
+     *  guest and guest_nice readings.
+     */
+    public long getTotalTime() {
+
+        return
+                userTime +
+                        niceTime +
+                        systemTime +
+                        idleTime +
+                        iowaitTime +
+                        irqTime +
+                        softirqTime +
+                        stealTime +
+                        guestTime +
+                        guestNiceTime;
     }
 
     // Package protected -----------------------------------------------------------------------------------------------
@@ -430,6 +649,14 @@ public class CPUStats {
         catch(Exception e) {
 
             throw new ParsingException(lineNumber, "invalid guest_nice time value: " + token, e);
+        }
+    }
+
+    private void insureStateChanged(CPUStats previousReading) {
+
+        if (previousReading.getTotalTime() == getTotalTime()) {
+
+            throw new IllegalArgumentException("cpu statistics did not change since the last reading");
         }
     }
 
