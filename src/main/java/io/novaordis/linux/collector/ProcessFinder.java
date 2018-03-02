@@ -84,7 +84,7 @@ public class ProcessFinder implements Runnable {
 
     public void run() {
 
-        while(findProcess) {
+        do {
 
             try {
 
@@ -143,10 +143,14 @@ public class ProcessFinder implements Runnable {
                 e.printStackTrace(System.err);
             }
         }
+        while(findProcess);
     }
 
     // Public ----------------------------------------------------------------------------------------------------------
 
+    /**
+     * Will stop the main loop. Calling this before run() is invoked will make run() execute logic once and exit.
+     */
     public void stop() {
 
         this.findProcess = false;

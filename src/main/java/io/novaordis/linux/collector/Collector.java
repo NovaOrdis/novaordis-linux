@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import io.novaordis.linux.PerProcessStat;
 import io.novaordis.linux.ProcStat;
+import io.novaordis.linux.collector.command.Command;
 import io.novaordis.utilities.UserErrorException;
 import io.novaordis.utilities.parsing.ParsingException;
 
@@ -94,69 +95,77 @@ public class Collector {
     public void run() throws UserErrorException {
 
         String processRegex = conf.getProcessRegex();
+        Command command = conf.getCommand();
 
-        if (processRegex != null) {
+        if (command != null) {
 
-            //
-            // start another thread to look for the process specified by the regular expression, and do it continuously
-            // and asynchronously while we're collecting samples on the main thread
-            //
-            //
-
-            startProcessFinder(processRegex);
+            command.execute();
         }
+        else {
 
-        //
-        // do the sample collection on the main thread
-        //
+            //
+            // default behavior, collect data
+            //
 
-        while (doRun) {
-
-            long t0 = System.currentTimeMillis();
-
-            try {
-
-                sampleCollectionRun();
-            }
-            catch(TransientUserException e) {
-
-                System.err.println("[warn]: " + e.getMessage());
-            }
-            finally {
-
-                long t1 = System.currentTimeMillis();
-
-                long collectionDuration = t1 - t0;
+            if (processRegex != null) {
 
                 //
-                // if the collection finished quicker than the sampling interval, sleep ...
+                // start another thread to look for the process specified by the regular expression, and do it continuously
+                // and asynchronously while we're collecting samples on the main thread
+                //
                 //
 
-                long timeToSleep = samplingIntervalMs - collectionDuration;
+                startProcessFinder(processRegex);
+            }
 
-                if (timeToSleep > 0) {
+            //
+            // do the sample collection on the main thread, unless a specific command is provided
+            //
 
-                    try {
+            while (doRun) {
 
-                        Thread.sleep(timeToSleep);
-                    }
-                    catch(InterruptedException e) {
+                long t0 = System.currentTimeMillis();
 
-                        //
-                        // no reason to be interrupted, but if we are, warn and collect faster than the
-                        // sampling interval
-                        //
+                try {
 
-                        System.err.println("[warn]: collection thread interrupted");
-                    }
-                }
-                else if (timeToSleep < 0) {
+                    sampleCollectionRun();
+                } catch (TransientUserException e) {
+
+                    System.err.println("[warn]: " + e.getMessage());
+                } finally {
+
+                    long t1 = System.currentTimeMillis();
+
+                    long collectionDuration = t1 - t0;
 
                     //
-                    // otherwise warn we're configured too tight ...
+                    // if the collection finished quicker than the sampling interval, sleep ...
                     //
 
-                    System.err.println("[warn]: cannot complete collections in " + samplingIntervalMs + " ms, consider increasing the interval ...");
+                    long timeToSleep = samplingIntervalMs - collectionDuration;
+
+                    if (timeToSleep > 0) {
+
+                        try {
+
+                            Thread.sleep(timeToSleep);
+                        } catch (InterruptedException e) {
+
+                            //
+                            // no reason to be interrupted, but if we are, warn and collect faster than the
+                            // sampling interval
+                            //
+
+                            System.err.println("[warn]: collection thread interrupted");
+                        }
+                    } else if (timeToSleep < 0) {
+
+                        //
+                        // otherwise warn we're configured too tight ...
+                        //
+
+                        System.err.println("[warn]: cannot complete collections in " + samplingIntervalMs + " ms, consider increasing the interval ...");
+                    }
                 }
             }
         }

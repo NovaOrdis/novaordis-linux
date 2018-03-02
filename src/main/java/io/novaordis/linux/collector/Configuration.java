@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import io.novaordis.linux.collector.command.Command;
+import io.novaordis.linux.collector.command.Find;
 import io.novaordis.utilities.UserErrorException;
 
 /**
@@ -40,6 +42,7 @@ public class Configuration {
     private File outputFile;
     private String processRegex;
     private int samplingIntervalMs;
+    private Command command;
 
     // Constructors ----------------------------------------------------------------------------------------------------
 
@@ -67,14 +70,16 @@ public class Configuration {
             else if (crt.startsWith("--process-regex=")) {
 
                 processRegex = crt.substring("--process-regex=".length());
-
-                System.out.println("process regex: " + processRegex);
             }
             else if (crt.equalsIgnoreCase("--help") || crt.equalsIgnoreCase("help")) {
 
                 displayHelp();
 
                 System.exit(0);
+            }
+            else if (Find.LITERAL.equals(crt)) {
+
+                this.command = new Find(this);
             }
             else {
 
@@ -104,6 +109,14 @@ public class Configuration {
     public int getSamplingIntervalMs() {
 
         return samplingIntervalMs;
+    }
+
+    /**
+     * May return null, which means default behavior - collect statistics.
+     */
+    public Command getCommand() {
+
+        return command;
     }
 
     // Package protected -----------------------------------------------------------------------------------------------
