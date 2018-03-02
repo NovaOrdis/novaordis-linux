@@ -1,0 +1,14 @@
+
+A CPU statistics collector (/proc/stat, proc/<pid>/stat) that periodically reads
+O/S level statistics for the entire system and for a process specified via a
+regular expression, and displays those statistics at stdout or writes them in a
+file. To stop the collection, Ctrl-C.
+
+Usage:
+
+    java -jar collector.jar [--output-file=/tmp/cpu.csv] [--process-regex='<regex>'] [--sampling-interval-ms=10]
+
+Example
+
+    java -jar collector.jar --process-regex=' -server ' --sampling-interval-ms=50
+

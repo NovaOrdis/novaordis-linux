@@ -16,7 +16,10 @@
 
 package io.novaordis.linux.collector;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import io.novaordis.utilities.UserErrorException;
 
@@ -67,6 +70,12 @@ public class Configuration {
 
                 System.out.println("process regex: " + processRegex);
             }
+            else if (crt.equalsIgnoreCase("--help") || crt.equalsIgnoreCase("help")) {
+
+                displayHelp();
+
+                System.exit(0);
+            }
             else {
 
                 throw new UserErrorException("unknown argument: " + crt);
@@ -102,6 +111,52 @@ public class Configuration {
     // Protected -------------------------------------------------------------------------------------------------------
 
     // Private ---------------------------------------------------------------------------------------------------------
+
+    private void displayHelp() {
+
+        InputStream is = Configuration.class.getClassLoader().getResourceAsStream("collector-help.txt");
+
+        if (is == null) {
+
+            System.err.println("no in-line help file found in classpath");
+        }
+        else {
+
+            BufferedReader br = null;
+
+            try {
+
+                br = new BufferedReader(new InputStreamReader(is));
+
+                String line;
+
+                while ((line = br.readLine()) != null) {
+
+                    System.out.println(line);
+                }
+            }
+            catch(Exception e) {
+
+                System.err.println("I/O error while reading help file");
+            }
+            finally {
+
+                if (br != null) {
+
+                    try {
+
+                        br.close();
+                    }
+                    catch(Exception e) {
+
+                        //
+                        // ok to ignore
+                        //
+                    }
+                }
+            }
+        }
+    }
 
     // Inner classes ---------------------------------------------------------------------------------------------------
 

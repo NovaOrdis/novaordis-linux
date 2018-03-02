@@ -26,6 +26,8 @@ import io.novaordis.utilities.UserErrorException;
  *
  * If no output file is specified, the process will write to stdout.
  *
+ * For more usage details, see src/main/resources/collector-help.txt
+ *
  * @author Ovidiu Feodorov <ovidiu@novaordis.com>
  * @since 3/1/18
  */
