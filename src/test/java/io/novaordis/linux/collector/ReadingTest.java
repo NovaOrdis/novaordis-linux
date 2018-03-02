@@ -51,6 +51,8 @@ public class ReadingTest {
         Reading r = new Reading(1L, new ProcStat("cpu 1000 0 0 0 0 0 0 0 0 0".getBytes()), null, null);
 
         assertNull(r.computeCpuUtilization());
+
+        assertEquals(1L, r.getTime());
     }
 
     @Test

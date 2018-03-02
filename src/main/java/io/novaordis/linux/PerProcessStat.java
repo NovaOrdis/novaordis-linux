@@ -31,58 +31,58 @@ public class PerProcessStat implements PreParsedContent {
 
     // Constants -------------------------------------------------------------------------------------------------------
 
-    public static final int FIELD_1_PID = 0;
-    public static final int FIELD_2_EXECUTABLE_FILE_NAME = 1;
-    public static final int FIELD_3_STATE = 2;
-    public static final int FIELD_4_PPID = 3;
-    public static final int FIELD_5_PGRP = 4;
-    public static final int FIELD_6_SESSION = 5;
-    public static final int FIELD_7_TTY_NR = 6;
-    public static final int FIELD_8_TPGID = 7;
-    public static final int FIELD_9_FLAGS = 8;
-    public static final int FIELD_10_MINFLT = 9;
-    public static final int FIELD_11_CMINFLT = 10;
-    public static final int FIELD_12_MAJFLT = 11;
-    public static final int FIELD_13_CMAJFLT = 12;
-    public static final int FIELD_14_UTIME = 13;
-    public static final int FIELD_15_STIME = 14;
-    public static final int FIELD_16_CUTIME = 15;
-    public static final int FIELD_17_CSTIME = 16;
-    public static final int FIELD_18_PRIORITY = 17;
-    public static final int FIELD_19_NICE = 18;
-    public static final int FIELD_20_NUM_THREADS = 19;
-    public static final int FIELD_21_ITREALVALUE = 20;
-    public static final int FIELD_22_STARTTIME = 21;
-    public static final int FIELD_23_VSIZE = 22;
-    public static final int FIELD_24_RSS = 23;
-    public static final int FIELD_25_RSSLIM = 24;
-    public static final int FIELD_26_STARTCODE = 25;
-    public static final int FIELD_27_ENDCODE = 26;
-    public static final int FIELD_28_STARTSTACK = 27;
-    public static final int FIELD_29_KSTKESP = 28;
-    public static final int FIELD_30_KSTKEIP = 29;
-    public static final int FIELD_31_SIGNAL = 30;
-    public static final int FIELD_32_BLOCKED = 31;
-    public static final int FIELD_33_SIGIGNORE = 32;
-    public static final int FIELD_34_SIGCATCH = 33;
-    public static final int FIELD_35_WCHAN = 34;
-    public static final int FIELD_36_NSWAP = 35;
-    public static final int FIELD_37_CNSWAP = 36;
-    public static final int FIELD_38_EXIT_SIGNAL = 37;
-    public static final int FIELD_39_PROCESSOR = 38;
-    public static final int FIELD_40_RT_PRIORITY = 39;
-    public static final int FIELD_41_POLICY = 40;
-    public static final int FIELD_42_DELAYACCT_BLKIO_TICKS = 41;
-    public static final int FIELD_43_GUEST_TIME = 42;
-    public static final int FIELD_44_CGUEST_TIME = 43;
-    public static final int FIELD_45_START_DATA = 44;
-    public static final int FIELD_46_END_DATA = 45;
-    public static final int FIELD_47_START_BRK = 46;
-    public static final int FIELD_48_ARG_START = 47;
-    public static final int FIELD_49_ARG_END = 48;
-    public static final int FIELD_50_ENV_START = 49;
-    public static final int FIELD_51_ENV_END = 50;
-    public static final int FIELD_52_EXIT_CODE = 51;
+    private static final int FIELD_1_PID = 0;
+    private static final int FIELD_2_EXECUTABLE_FILE_NAME = 1;
+    private static final int FIELD_3_STATE = 2;
+    private static final int FIELD_4_PPID = 3;
+    private static final int FIELD_5_PGRP = 4;
+    private static final int FIELD_6_SESSION = 5;
+    private static final int FIELD_7_TTY_NR = 6;
+    private static final int FIELD_8_TPGID = 7;
+    private static final int FIELD_9_FLAGS = 8;
+    private static final int FIELD_10_MINFLT = 9;
+    private static final int FIELD_11_CMINFLT = 10;
+    private static final int FIELD_12_MAJFLT = 11;
+    private static final int FIELD_13_CMAJFLT = 12;
+    private static final int FIELD_14_UTIME = 13;
+    private static final int FIELD_15_STIME = 14;
+    private static final int FIELD_16_CUTIME = 15;
+    private static final int FIELD_17_CSTIME = 16;
+    private static final int FIELD_18_PRIORITY = 17;
+    private static final int FIELD_19_NICE = 18;
+    private static final int FIELD_20_NUM_THREADS = 19;
+    private static final int FIELD_21_ITREALVALUE = 20;
+    private static final int FIELD_22_STARTTIME = 21;
+    private static final int FIELD_23_VSIZE = 22;
+    private static final int FIELD_24_RSS = 23;
+    private static final int FIELD_25_RSSLIM = 24;
+    private static final int FIELD_26_STARTCODE = 25;
+    private static final int FIELD_27_ENDCODE = 26;
+    private static final int FIELD_28_STARTSTACK = 27;
+    private static final int FIELD_29_KSTKESP = 28;
+    private static final int FIELD_30_KSTKEIP = 29;
+    private static final int FIELD_31_SIGNAL = 30;
+    private static final int FIELD_32_BLOCKED = 31;
+    private static final int FIELD_33_SIGIGNORE = 32;
+    private static final int FIELD_34_SIGCATCH = 33;
+    private static final int FIELD_35_WCHAN = 34;
+    private static final int FIELD_36_NSWAP = 35;
+    private static final int FIELD_37_CNSWAP = 36;
+    private static final int FIELD_38_EXIT_SIGNAL = 37;
+    private static final int FIELD_39_PROCESSOR = 38;
+    private static final int FIELD_40_RT_PRIORITY = 39;
+    private static final int FIELD_41_POLICY = 40;
+    private static final int FIELD_42_DELAYACCT_BLKIO_TICKS = 41;
+    private static final int FIELD_43_GUEST_TIME = 42;
+    private static final int FIELD_44_CGUEST_TIME = 43;
+    private static final int FIELD_45_START_DATA = 44;
+    private static final int FIELD_46_END_DATA = 45;
+    private static final int FIELD_47_START_BRK = 46;
+    private static final int FIELD_48_ARG_START = 47;
+    private static final int FIELD_49_ARG_END = 48;
+    private static final int FIELD_50_ENV_START = 49;
+    private static final int FIELD_51_ENV_END = 50;
+    private static final int FIELD_52_EXIT_CODE = 51;
 
     // Static ----------------------------------------------------------------------------------------------------------
 
@@ -103,7 +103,7 @@ public class PerProcessStat implements PreParsedContent {
 
     // Constructors ----------------------------------------------------------------------------------------------------
 
-    public PerProcessStat() {
+    private PerProcessStat() {
 
         instanceCreationTime = System.currentTimeMillis();
     }

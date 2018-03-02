@@ -95,7 +95,7 @@ public class Reading {
             line.append(pps.getUtime()).append(", ");
             line.append(pps.getStime()).append(", ");
             line.append(pps.getCutime()).append(", ");
-            line.append(pps.getCstime()).append(", ");;
+            line.append(pps.getCstime()).append(", ");
 
             Double cpuUtilization = computeCpuUtilization();
 
