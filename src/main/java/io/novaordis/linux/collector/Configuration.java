@@ -33,7 +33,7 @@ public class Configuration {
 
     // Constants -------------------------------------------------------------------------------------------------------
 
-    public static final int DEFAULT_SAMPLING_INTERVAL_MS = 10;
+    private static final int DEFAULT_SAMPLING_INTERVAL_MS = 10;
 
     // Static ----------------------------------------------------------------------------------------------------------
 
@@ -46,10 +46,11 @@ public class Configuration {
 
     // Constructors ----------------------------------------------------------------------------------------------------
 
-    public Configuration(String[] args) throws UserErrorException {
+    Configuration(String[] args) throws UserErrorException {
 
         samplingIntervalMs = DEFAULT_SAMPLING_INTERVAL_MS;
 
+        //noinspection ForLoopReplaceableByForEach
         for(int i = 0; i < args.length; i ++) {
 
             String crt = args[i];

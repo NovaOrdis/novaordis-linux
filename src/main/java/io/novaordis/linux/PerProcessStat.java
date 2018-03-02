@@ -103,6 +103,11 @@ public class PerProcessStat implements PreParsedContent {
 
     // Constructors ----------------------------------------------------------------------------------------------------
 
+    public PerProcessStat() {
+
+        instanceCreationTime = System.currentTimeMillis();
+    }
+
     /**
      * "Reads" the file information and initializes internal structures.
      *
@@ -115,14 +120,14 @@ public class PerProcessStat implements PreParsedContent {
      */
     public PerProcessStat(int pid, byte[] content) throws ParsingException, IllegalArgumentException {
 
+        this();
+
         if (content == null) {
 
             throw new IllegalArgumentException("null content");
         }
 
         this.pid = pid;
-
-        instanceCreationTime = System.currentTimeMillis();
 
         String contentAsString = new String(content);
 
@@ -169,6 +174,11 @@ public class PerProcessStat implements PreParsedContent {
     public long getGuesttime() {
 
         return guesttime;
+    }
+
+    public long getTotalTime() {
+
+        return utime + stime + cutime + cstime;
     }
 
     // Package protected -----------------------------------------------------------------------------------------------

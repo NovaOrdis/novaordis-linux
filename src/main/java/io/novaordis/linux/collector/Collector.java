@@ -61,6 +61,8 @@ public class Collector {
     //
     private AtomicReference<Integer> pid;
 
+    private Reading previousReading;
+
     // Constructors ----------------------------------------------------------------------------------------------------
 
     Collector(Configuration conf) throws UserErrorException {
@@ -129,10 +131,12 @@ public class Collector {
                 try {
 
                     sampleCollectionRun();
-                } catch (TransientUserException e) {
+                }
+                catch (TransientUserException e) {
 
                     System.err.println("[warn]: " + e.getMessage());
-                } finally {
+                }
+                finally {
 
                     long t1 = System.currentTimeMillis();
 
@@ -221,8 +225,11 @@ public class Collector {
 
         long t1 = System.currentTimeMillis();
 
-        Reading r = new Reading(t0 + (t1 - t0)/2, s, s2);
+        Reading r = new Reading(t0 + (t1 - t0)/2, s, s2, previousReading);
+
         write(r);
+
+        previousReading = r;
     }
 
     private ProcStat collectProcStat() throws UserErrorException {
@@ -310,6 +317,11 @@ public class Collector {
             //
 
             throw new UserErrorException("failed to write data into " + outputFile, e);
+        }
+        finally {
+
+            // severs the relationship with the previous reading
+            r.clear();
         }
     }
 

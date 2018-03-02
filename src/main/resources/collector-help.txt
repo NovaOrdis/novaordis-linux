@@ -15,5 +15,5 @@ Example
 It is possible to test the regular expression to make sure it correctly selects the process
 without collecting any statistics:
 
-
-    java -jar collector.jar --process-regex='...' find
+    java -jar collector.jar find --process-regex='...'
+    java -jar collector.jar find --process-regex='-D\[Standalone\]'

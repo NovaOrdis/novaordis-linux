@@ -16,13 +16,13 @@
 
 package io.novaordis.linux;
 
-import io.novaordis.utilities.parsing.ParsingException;
-import io.novaordis.utilities.parsing.PreParsedContent;
-
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.novaordis.utilities.parsing.ParsingException;
+import io.novaordis.utilities.parsing.PreParsedContent;
 
 /**
  * Represents an immutable /proc/stat "reading" - the state of the file at a certain moment in time.
@@ -56,6 +56,13 @@ public class ProcStat implements PreParsedContent {
 
     // Constructors ----------------------------------------------------------------------------------------------------
 
+    public ProcStat() {
+
+        instanceCreationTime = System.currentTimeMillis();
+
+        perCPUStatistics = new ArrayList<>();
+    }
+
     /**
      * "Reads" the file information and initializes internal structures.
      *
@@ -63,14 +70,12 @@ public class ProcStat implements PreParsedContent {
      */
     public ProcStat(byte[] content) throws ParsingException {
 
+        this();
+
         if (content == null) {
 
             throw new IllegalArgumentException("null content");
         }
-
-        instanceCreationTime = System.currentTimeMillis();
-
-        perCPUStatistics = new ArrayList<>();
 
         String contentAsString = new String(content);
 
