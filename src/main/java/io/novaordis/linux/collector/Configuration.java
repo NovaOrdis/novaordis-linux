@@ -72,6 +72,10 @@ public class Configuration {
 
                 processRegex = crt.substring("--process-regex=".length());
             }
+            else if (crt.startsWith("--output-file=")) {
+
+                outputFile = new File(crt.substring("--output-file=".length()));
+            }
             else if (crt.equalsIgnoreCase("--help") || crt.equalsIgnoreCase("help")) {
 
                 displayHelp();

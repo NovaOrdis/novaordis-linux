@@ -34,7 +34,7 @@ public class Reading {
 
     private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("MM/dd/yy hh:mm:ss.SSS");
 
-    private static final Format PERCENTAGE_FORMAT = new DecimalFormat("%0.00");
+    private static final Format PERCENTAGE_FORMAT = new DecimalFormat("0.00");
 
     // Static ----------------------------------------------------------------------------------------------------------
 
@@ -101,7 +101,7 @@ public class Reading {
 
             if (cpuUtilization != null) {
 
-                line.append(PERCENTAGE_FORMAT.format(cpuUtilization));
+                line.append(PERCENTAGE_FORMAT.format(100 * cpuUtilization));
             }
         }
 

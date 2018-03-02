@@ -260,7 +260,7 @@ public class Collector {
 
     /**
      * @param pid the pid of the process to investigate. May be null, in which case we're a noop.
-     * @return per-process statistics or null if the pid was null.
+     * @return per-process statistics or null if the pid was null, or if /proc/<pid>/stat does not exist.
      */
     private PerProcessStat collectPerProcessStat(Integer pid) throws TransientUserException {
 
@@ -277,7 +277,12 @@ public class Collector {
 
         if (!stat.isFile()) {
 
-            throw new TransientUserException("no " + stat + " file found");
+            //
+            // it is possible that the process went away and its representation in /proc was removed before
+            // our process finder learns that, so we just silently return null here
+            //
+
+            return null;
         }
 
         try {
